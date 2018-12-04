@@ -42,4 +42,9 @@ class EntriesController < ApplicationController
     end
   end
 
+  def destroy
+    DELETE /entries/:id(.:format)      #entries#destroy
+    redirect_to entry_url(params[:id])
+  end
+
 end
