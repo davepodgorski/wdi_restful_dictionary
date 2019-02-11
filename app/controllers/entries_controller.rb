@@ -1,24 +1,26 @@
 class EntriesController < ApplicationController
   def index
-    render :index
+    @entries = Entry.all
   end
   def show
-    render :show
+    @entry = Entry.fine(params[:id])
   end
+
   def new
-    render :new
+    @entry = Entry.ew
   end
 
   def create
-      @entry = Article.new
+      @entry = Entry.new
+      @entry.word = params[:entry][:word]
+      @entry.definition = params[:entry][:definition]
+      @entry.language = params[:entry][:language]
 
-      @entry.title = params[:article][:title]
-      @entry.text = params[:article][:text]
 
 
         if @entry.save
       # if the picture gets saved, generate a get request to "/pictures" (the index)
-          redirect_to_entries_url
+          redirect_to_entries_path
         else
       # otherwise render new.html.erb
           render :new
@@ -26,25 +28,27 @@ class EntriesController < ApplicationController
       end
 
       def edit
-        @entry = Article.find(params[:id])
+        @entry = Entry.find(params[:id])
       end
 
   def update
-    @entry = Article.find(params[:id])
+    @entry = Entry.find(params[:id])
 
-    @entry.title = params[:article][:title]
-    @entry.text = params[:article][:text]
+    @entry.word = params[:entry][:word]
+    @entry.definition = params[:entry][:definition]
+    @entry.language = params[:entry][:language]
 
     if @entry.save
-    redirect_to entry_url(params[:id])
+    redirect_to entries_path
     else
       render :edit
     end
   end
 
   def destroy
-    DELETE /entries/:id(.:format)      #entries#destroy
-    redirect_to entry_url(params[:id])
+    @entry = Entry.find(params[:id])
+    @entry.destroy
+    redirect_to entries_path
   end
 
 end

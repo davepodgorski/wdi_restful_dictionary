@@ -1,1 +1,11 @@
 <p>This is the entries index page</p>
+
+<% @entries.each do |current_entry| %>
+  <%= render 'single_entry', entry: current_entry %>
+  <% end %>
+
+  <% @entries.each do |current_entry| %>
+  <%= render 'single_entry', entry: current_entry %>
+  <% end %>
+
+  <%= link_to 'New Entry', new_entry_path %>
